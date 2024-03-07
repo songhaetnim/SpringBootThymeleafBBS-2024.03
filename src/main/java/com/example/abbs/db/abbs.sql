@@ -2,7 +2,7 @@ SET SESSION FOREIGN_KEY_CHECKS=0;
 
 /* Drop Tables */
 
-DROP TABLE IF EXISTS annlbersary;
+DROP TABLE IF EXISTS anniversary;
 DROP TABLE IF EXISTS likes;
 DROP TABLE IF EXISTS reply;
 DROP TABLE IF EXISTS board;
@@ -14,13 +14,13 @@ DROP TABLE IF EXISTS users;
 
 /* Create Tables */
 
-CREATE TABLE annlbersary
+CREATE TABLE anniversary
 (
 	aid int NOT NULL AUTO_INCREMENT,
 	uid varchar(12) NOT NULL,
 	aname varchar(20) NOT NULL,
 	adate char(8) NOT NULL,
-	isHokkday int DEFAULT 0,
+	isHoliday int DEFAULT 0,
 	PRIMARY KEY (aid)
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE board
 	title varchar(256) NOT NULL,
 	content varchar(4000),
 	uid varchar(12) NOT NULL,
-	modTime datetime DEFAULT NOW(), SYSDATE(),
+	modTime datetime DEFAULT CURRENT_TIMESTAMP,
 	isDeleted int DEFAULT 0,
 	viewCount int DEFAULT 0,
 	replyCount int DEFAULT 0,
@@ -55,7 +55,7 @@ CREATE TABLE reply
 (
 	rid int NOT NULL AUTO_INCREMENT,
 	comment varchar(256) NOT NULL,
-	regTime datetime DEFAULT NOW(), SYSDATE(),
+	regTime datetime DEFAULT CURRENT_TIMESTAMP,
 	uid varchar(12) NOT NULL,
 	bid int NOT NULL,
 	isMine int DEFAULT 0,
@@ -70,9 +70,9 @@ CREATE TABLE schedule
 	sdate char(8) NOT NULL,
 	title varchar(40) NOT NULL,
 	place varchar(40),
-	statTime char(4),
+	startTime char(4),
 	endTime char(4),
-	isImpor int DEFAULT 0,
+	isImportant int DEFAULT 0,
 	memo varchar(100),
 	PRIMARY KEY (sid)
 );
@@ -113,7 +113,7 @@ ALTER TABLE reply
 ;
 
 
-ALTER TABLE annlbersary
+ALTER TABLE anniversary
 	ADD FOREIGN KEY (uid)
 	REFERENCES users (uid)
 	ON UPDATE RESTRICT
@@ -151,6 +151,3 @@ ALTER TABLE schedule
 	ON UPDATE RESTRICT
 	ON DELETE RESTRICT
 ;
-
-
-

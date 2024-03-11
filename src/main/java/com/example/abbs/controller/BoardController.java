@@ -29,13 +29,14 @@ public class BoardController {
 		
 		int totalBoardCount = boardService.getBoardCount(field, query);
 		int totalPages = (int) Math.ceil(totalBoardCount / (double)BoardService.COUNT_PER_PAGE);
-		int startPage = (int) Math.ceil((page-0.5)/BoardService.PAGE_PER_SCREEN) * BoardService.PAGE_PER_SCREEN + 1;
+		int startPage = (int) Math.ceil((page-0.5)/BoardService.PAGE_PER_SCREEN - 1) * BoardService.PAGE_PER_SCREEN + 1;
 		int endPage = Math.min(totalPages, startPage + BoardService.PAGE_PER_SCREEN - 1);
 		List<String> pageList = new ArrayList<>();
 		for (int i = startPage; i <= endPage; i++)
 			pageList.add(String.valueOf(i));
 		
 		session.setAttribute("currentBoardPage", page);
+		
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("field", field);
 		model.addAttribute("query", query);

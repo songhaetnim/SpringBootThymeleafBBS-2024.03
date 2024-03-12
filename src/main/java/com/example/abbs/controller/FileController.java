@@ -1,5 +1,6 @@
 package com.example.abbs.controller;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,7 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Controller
 @RequestMapping("/file")
 public class FileController {
-	@Value("${spring.servlet.multipart.location}") private String uploadDir;
+@Value("${spring.servlet.multipart.location}") private String uploadDir;
 	
 	@GetMapping("/profile/{filename}")
 	public ResponseEntity<Resource> profile(@PathVariable String filename) {
@@ -49,21 +50,52 @@ public class FileController {
 
 	@GetMapping("/download/{filename}")
 	public ResponseEntity<Resource> download(@PathVariable String filename) {
-		
+		Path path = Paths.get(uploadDir + "image/" + filename);
+		try {
+			String contentType = Files.probeContentType(path);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentDisposition(
+					ContentDisposition.builder("attachment")
+					 				  .filename(filename, StandardCharsets.UTF_8)
+					 				  .build()
+					);
+			headers.add(HttpHeaders.CONTENT_TYPE, contentType);
+			Resource resource = new InputStreamResource(Files.newInputStream(path));
+			return new ResponseEntity<>(resource, headers, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
+	
 	@ResponseBody
 	@PostMapping("/imageUpload")
 	public String imageUpload(MultipartHttpServletRequest req) {
-		
-		String callback = req.getParameter("CKEditorRuncNum");   //1
+		String callback = req.getParameter("CKEditorFuncNum"); 		// 1
 		String error = "";
 		String url = null;
 		Map<String, MultipartFile> map = req.getFileMap();
+		for (Map.Entry<String, MultipartFile> pair: map.entrySet()) {
+			MultipartFile file = pair.getValue();
+			String filename = file.getOriginalFilename();
+			int idx = filename.lastIndexOf(".");
+			filename = System.currentTimeMillis() + filename.substring(idx);
+			String uploadPath = uploadDir + "image/" + filename;
+			try {
+				file.transferTo(new File(uploadPath));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			url = "/abbs/file/download/" + filename;
+		}
 		
 		String ajaxResponse = "<script>"
+				+ "	window.parent.CKEDITOR.tools.callFunction("
+				+ 		callback + ", '" + url + "', '" + error + "'"
+				+ "	);"
 				+ "</script>";
-		return null;
-		
+		return ajaxResponse;
 	}
+	//<script>
+	// window.parent.ckeditor.tools.callfuncrion(
 }

@@ -31,9 +31,9 @@ public class BoardController {
 		int totalPages = (int) Math.ceil(totalBoardCount / (double)BoardService.COUNT_PER_PAGE);
 		int startPage = (int) Math.ceil((page-0.5)/BoardService.PAGE_PER_SCREEN - 1) * BoardService.PAGE_PER_SCREEN + 1;
 		int endPage = Math.min(totalPages, startPage + BoardService.PAGE_PER_SCREEN - 1);
-		List<String> pageList = new ArrayList<>();
+		List<Integer> pageList = new ArrayList<>();
 		for (int i = startPage; i <= endPage; i++)
-			pageList.add(String.valueOf(i));
+			pageList.add(i);
 		
 		session.setAttribute("currentBoardPage", page);
 		
@@ -48,4 +48,8 @@ public class BoardController {
 		return "board/list";
 	}
 	
+	@GetMapping("/insert")
+	public String insertForm() {
+		return "board/insert";
+	}
 }

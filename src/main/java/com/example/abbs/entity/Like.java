@@ -7,6 +7,11 @@ public class Like {
 	private int value;
 	
 	public Like() { }
+	public Like(String uid, int bid, int value) {
+		this.uid = uid;
+		this.bid = bid;
+		this.value = value;
+	}
 	public Like(int lid, String uid, int bid, int value) {
 		this.lid = lid;
 		this.uid = uid;

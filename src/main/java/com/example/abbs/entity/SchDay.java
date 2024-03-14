@@ -3,26 +3,25 @@ package com.example.abbs.entity;
 import java.util.List;
 
 public class SchDay {
-	private int day;       // 1 ~ 31 일
-	private int date;      // 요일, 0 - 일요일,....., 6 - 토요일
+	private int day;		// 1 ~ 31
+	private int date;		// 요일, 0 - 일요일, ..., 6 - 토요일
 	private int isHoliday;
 	private int isOtherMonth;
-	private String sdate;    //20240313 <- 현재 년도 월 날짜
-	private List<String> annvList;
+	private String sdate;	// 20240313
+	private List<String> annivList;
 	private List<Schedule> schedList;
 	
 	public SchDay() { }
-	public SchDay(int day, int date, int isHoliday, int isOtherMonth, String sdate, List<String> annvList,
+	public SchDay(int day, int date, int isHoliday, int isOtherMonth, String sdate, List<String> annivList,
 			List<Schedule> schedList) {
 		this.day = day;
 		this.date = date;
 		this.isHoliday = isHoliday;
 		this.isOtherMonth = isOtherMonth;
 		this.sdate = sdate;
-		this.annvList = annvList;
+		this.annivList = annivList;
 		this.schedList = schedList;
 	}
-	
 	
 	public int getDay() {
 		return day;
@@ -54,11 +53,11 @@ public class SchDay {
 	public void setSdate(String sdate) {
 		this.sdate = sdate;
 	}
-	public List<String> getAnnvList() {
-		return annvList;
+	public List<String> getAnnivList() {
+		return annivList;
 	}
-	public void setAnnvList(List<String> annvList) {
-		this.annvList = annvList;
+	public void setAnnivList(List<String> annivList) {
+		this.annivList = annivList;
 	}
 	public List<Schedule> getSchedList() {
 		return schedList;

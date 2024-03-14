@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User getUserByUid(String uid) {
-		return uDao.getUser(uid); 
+		return uDao.getUser(uid);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void updateUser(User user) {
 		uDao.updateUser(user);
-	}	
+	}
 
 	@Override
 	public void deleteUser(String uid) {
@@ -55,5 +55,5 @@ public class UserServiceImpl implements UserService {
 			return CORRECT_LOGIN;
 		return WRONG_PASSWORD;
 	}
-	
+
 }

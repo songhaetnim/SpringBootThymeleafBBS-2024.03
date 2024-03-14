@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImageUtil {
 	@Value("${spring.servlet.multipart.location}") private String uploadDir;
+	
 	/**
 	 * 이미지를 정사각형으로 잘라서 저장하고, 파일 이름을 반환함
 	 * @param uid
@@ -24,7 +25,7 @@ public class ImageUtil {
 	public String squareImage(String uid, String fname) {
 		String newFname = null;
 		try {
-			File file = new File(uploadDir + "profile/" + fname);	// 이미지 다운받는 위치와 이미지 이름
+			File file = new File(uploadDir + "profile/" + fname);
 			BufferedImage buffer = ImageIO.read(file);
 			int width = buffer.getWidth();
 			int height = buffer.getHeight();
@@ -49,7 +50,7 @@ public class ImageUtil {
 			g.drawImage(buffer, 0, 0, size, size, x, y, x + size, y + size, null);
 			g.dispose();
 			
-			OutputStream os = new FileOutputStream(uploadDir + "profile/" + newFname);	// 이미지 다운받는 위치와 이미지 이름
+			OutputStream os = new FileOutputStream(uploadDir + "profile/" + newFname);
 			ImageIO.write(dest, format, os);
 			os.close();
 			file.delete();
@@ -58,4 +59,5 @@ public class ImageUtil {
 		}
 		return newFname;
 	}
+	
 }

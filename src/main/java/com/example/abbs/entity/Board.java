@@ -14,11 +14,7 @@ public class Board {
 	private int likeCount;
 	private String files;
 	private String uname;
-	
-	
-	
-	
-	
+		
 	public Board() { }
 	public Board(String title, String content, String uid, String files) {
 		this.title = title;
